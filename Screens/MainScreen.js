@@ -6,6 +6,9 @@ import {
     SafeAreaView,
     StatusBar,
     Platform,
+    ScrollView,
+    TouchableOpacity,
+    Image
 } from 'react-native';
 
 import * as Permissions from "expo-permissions";
@@ -29,6 +32,57 @@ import Filter11 from '../components/Filter11';
 import Filter12 from '../components/Filter12';
 
 
+data =
+    [
+        {
+            id: "1",
+            src: require("../assets/filter/crown-pic1.png")
+        },
+        {
+            id: "2",
+            src: require("../assets/filter/crown-pic2.png")
+        },
+        {
+            id: "3",
+            src: require("../assets/filter/crown-pic3.png")
+        },
+        {
+            id: "4",
+            src: require("../assets/filter/flower-pic1.png")
+        }, {
+
+            id: "5",
+            src: require("../assets/filter/flower-pic2.png")
+        },
+        {
+            id: "6",
+            src: require("../assets/filter/flower-pic3.png")
+        },
+        {
+            id: "7",
+            src: require("../assets/filter/hair-pic1.png")
+        },
+        {
+            id: "8",
+            src: require("../assets/filter/hat-pic1.png")
+        },
+        {
+            id: "9",
+            src: require("../assets/filter/hat-pic2.png")
+        },
+        {
+            id: "10",
+            src: require("../assets/filter/other-pic1.png")
+        },
+        {
+            id: "11",
+            src: require("../assets/filter/other-pic2.png")
+        },
+        {
+            id: "12",
+            src: require("../assets/filter/other-pic3.png")
+        }
+    ]
 
 
 export default class Main extends React.Component {
@@ -37,6 +91,7 @@ export default class Main extends React.Component {
         this.state = {
             cameraPermission: null,
             faces: [],
+            current_filter: "Filter",
         }
         this.onCameraPermission = this.onCameraPermission.bind(this)
         this.onFacesDetected = this.onFacesDetected.bind(this)
@@ -105,14 +160,77 @@ export default class Main extends React.Component {
                     />
                     {
                         this.state.faces.map(face => {
-                            return <Filter12 key={face.faceID} face={face} />
+                            if (this.state.current_filter === "filter1") {
+                                return <Filter1 key={1} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter2") {
+                                return <Filter2 key={2} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter3") {
+                                return <Filter3 key={3} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter4") {
+                                return <Filter4 key={4} face={face} />
+
+                            }
+
+                            else if (this.state.current_filter === "filter5") {
+                                return <Filter5 key={5} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter6") {
+                                return <Filter6 key={6} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter7") {
+                                return <Filter7 key={7} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter8") {
+                                return <Filter8 key={8} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter9") {
+                                return <Filter9 key={9} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter10") {
+                                return <Filter10 key={10} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter11") {
+                                return <Filter11 key={11} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter12") {
+                                return <Filter12 key={12} face={face} />
+                            }
                         })
                     }
 
                 </View>
 
                 <View style={styles.framesContainer}>
+                    <ScrollView style={{ flexDirection: "row", }} horizontal showsHorizontalScrollIndicator={false}>
+                        {
+                            data.map(filter_data => {
+                                return (
+                                    <TouchableOpacity
+                                        style={styles.filterImageContainer}
+                                        onPress={() => {
+                                            this.setState({ current_filter: `filter${filter_data.id}` })
+                                        }}
+                                    >
+                                        <Image source={filter_data.src} style={{ height: 40, width: 80, resizeMode: "contain" }} />
 
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </ScrollView>
                 </View>
             </View>
         )
@@ -154,12 +272,23 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
 
     },
+
     framesContainer: {
         flex: 0.2,
         paddingLeft: RFValue(20),
         paddingRight: RFValue(20),
         paddingTop: RFValue(30),
         backgroundColor: "#000"
+    },
+
+    filterImageContainer: {
+        height: RFPercentage(8),
+        width: RFPercentage(15),
+        justifyContent: "center",
+        alignItems: 'center',
+        backgroundColor: "#e4e7f8",
+        borderRadius: 30,
+        marginRight: 20,
     },
 
 });
